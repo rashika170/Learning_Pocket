@@ -10,10 +10,16 @@ import sys
 def slope(p1, p2):
     return (p2[1] - p1[1])/(p2[0] - p1[0])
 
-
-sys.stdout.write("Please enter the final location: ")
-link = sys.stdin.readline()
-img1 = cv2.imread(link[:-1])
+def inp():
+    sys.stdout.write("Please enter the file location: ")
+    link = sys.stdin.readline()[:-1]
+    if os.path.isfile(link):
+        return link
+    else:
+        sys.stdout.write("Please enter a valid file")
+        inp()
+link = inp()
+img1 = cv2.imread(link)
 img = cv2.resize(img1, (500, 500), interpolation=cv2.INTER_AREA)
 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
@@ -46,12 +52,12 @@ file.close()
 
 def locat():
     sys.stdout.write(
-        "Please enter the location where you would like to save thic file")
+        "Please enter the location where you would like to save this file: ")
     loc = sys.stdin.readline()[:-1]
     if os.path.isdir(loc) is True:
         return loc
     else:
-        print("enter a correct Folder")
+        print("Please enter a existing Folder")
         locat()
 
 
@@ -472,13 +478,13 @@ for i, x in enumerate(friction):
 for c, i in enumerate(liobj):
     cv2.putText(img, str(c+1), (int(i[0]*0.7), int(i[1]*0.9)),
                 cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 0), 2)
-sys.stdout.write("Do you want to save the FBD made on your device(Y/N)")
+sys.stdout.write("Do you want to save the FBD diagram and calculation on your device(Y/N)")
 choice = sys.stdin.readline()
 choice = choice[0]
 OLDDIR = os.getcwd()
 
 if choice == "Y" or choice == 'y':
-    sys.stdout.write("Please enter the folder name")
+    sys.stdout.write("Please enter the folder name: ")
     filename = sys.stdin.readline()[:-1]
     NEWDIR = locat()
     NEWDIR = NEWDIR.replace("\\", "/")

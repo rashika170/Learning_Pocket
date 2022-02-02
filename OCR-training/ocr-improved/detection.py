@@ -17,7 +17,11 @@ def compute_input(image):
     image /= variance * 255
     return image
 
-
+def reconfigImg(img):
+    size = img.size()
+    new_size = size/2
+    img.reshape(new_size)
+    return img
 
 
 def upconv(x, n, filters):
